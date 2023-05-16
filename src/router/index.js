@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import MainDepenseView from '@/views/MainDepense.vue'
 import DetailDepenseView from '@/views/DetailDepense.vue'
+import DepenseNouveauRemboursementView from '@/views/DepenseNouveauRemboursement.vue'
+import DepenseImpressionView from '@/views/DepenseImpression.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,19 +26,28 @@ const router = createRouter({
     },
     {
       path:'/depenses/:id',
-      name:'depense',
       component:MainDepenseView,
+      // le nom de la route principale disparaît
+      // au profit des routes filles.
+      // voir https://router.vuejs.org/guide/essentials/nested-routes.html#nested-named-routes
+      // pour les effets de l'utilsation d'un nom sur la route mère
       props: true,
       children: [
         {
           path:'',
           name:'depense-details',
-          component:DetailDepenseView 
+          component:DetailDepenseView,
         },
-        // {
-        //   path: '/imprimer',
-
-        // }
+        {
+          path: 'imprimer',
+          name:'depense-imprimer',
+          component: DepenseImpressionView,
+        },
+        {
+          path: 'ajouter-remboursement',
+          name:'depense-nouveau-remboursement',
+          component: DepenseNouveauRemboursementView,
+        }
       ]
     }
   ]

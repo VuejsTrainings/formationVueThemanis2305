@@ -5,7 +5,7 @@
       v-for="depense in depenses"
       :key="depense.id"
     >
-     <RouterLink :to="{name:'depense', params:{ id: depense.id } }">
+     <RouterLink :to="{name:'depense-details', params:{ id: depense.id } }">
       <Carte>
         <template #titre>
           <h2>{{ depense.nature }}</h2>
@@ -54,6 +54,9 @@ export default {
 }
 </script>
 <style scoped>
+  main a {
+    color: var(--vt-c-black)
+  }
   nav {
     display: flex;
     align-items: flex-start;

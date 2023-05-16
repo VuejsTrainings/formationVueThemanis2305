@@ -1,9 +1,9 @@
 <template>
     <h1>{{ nature }}, le {{ date }}</h1>
     <nav>
-        <RouterLink to="{name:'depense-details'}">Détails</RouterLink>
-        <RouterLink to="rembourser">Nouveau remboursement</RouterLink>
-        <RouterLink to="imprimer">Imprimer</RouterLink>
+        <RouterLink :to="{name:'depense-details'}">Détails</RouterLink>
+        <RouterLink :to="{name:'depense-nouveau-remboursement'}">Nouveau remboursement</RouterLink>
+        <RouterLink :to="{name: 'depense-imprimer'}">Imprimer</RouterLink>
     </nav>
     <RouterView :depense="depense" />
 </template>

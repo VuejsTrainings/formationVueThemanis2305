@@ -5,7 +5,6 @@
     </p>
 </template>
 <script>
-
 export default {
     props: {
         depense: {
