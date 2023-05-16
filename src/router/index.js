@@ -4,6 +4,7 @@ import MainDepenseView from '@/views/MainDepense.vue'
 import DetailDepenseView from '@/views/DetailDepense.vue'
 import DepenseNouveauRemboursementView from '@/views/DepenseNouveauRemboursement.vue'
 import DepenseImpressionView from '@/views/DepenseImpression.vue'
+import NotFoundView from '@/views/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,6 +58,12 @@ const router = createRouter({
       path: '/about',
       redirect: '/a-propos',
     },
+    // Route 404
+    {
+      path:'/:routeInconnue(.*)',
+      component: NotFoundView,
+      name:'not-found'
+    }
   ]
 })
 
