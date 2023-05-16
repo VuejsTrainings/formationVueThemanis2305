@@ -7,7 +7,10 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      props:(route) => ({
+        page: route.query.page ? parseInt(route.query.page) : 1 
+      })
     },
     {
       path: '/about',
