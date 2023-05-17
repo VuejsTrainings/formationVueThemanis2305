@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import { depenses } from '@/stores/depenses';
 import Carte from '@/components/CarteAvecSlots.vue'
+import DepensesService from '@/services/depenses';
 
 export default {
   components: {
@@ -37,19 +37,35 @@ export default {
   },
   data(){
     return {
-      depensesBase: depenses 
+      depensesBase: null, 
     }
   },
   computed:{
     depenses(){
       const NB = 2;
-      return this.depensesBase.slice((this.page - 1) * NB, this.page * NB)
+      if(this.depensesBase != null){
+        return this.depensesBase.slice((this.page - 1) * NB, this.page * NB)
+      }else{
+        return null;
+      }
     },
     avecSuivante(){
+      if(!this.depensesBase) return false;
       const nbDepenses = this.depensesBase.length;
       const nbPages = Math.ceil(nbDepenses / 2); 
       return this.page < nbPages;
     }
+  },
+   async beforeRouteEnter (to, from, next) {
+     try{
+       const httpResponse = await DepensesService.getAll()
+       next((vm)=>{
+         vm.depensesBase = httpResponse.data;
+       });
+     }catch(e){
+          console.log("Erreur!")
+          next({name:'erreur-reseau'});
+     }
   }
 }
 </script>

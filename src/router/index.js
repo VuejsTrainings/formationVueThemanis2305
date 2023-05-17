@@ -5,6 +5,7 @@ import DetailDepenseView from '@/views/DetailDepense.vue'
 import DepenseNouveauRemboursementView from '@/views/DepenseNouveauRemboursement.vue'
 import DepenseImpressionView from '@/views/DepenseImpression.vue'
 import NotFoundView from '@/views/NotFound.vue'
+import ErreurReseauView from '@/views/ErreurReseau.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -63,6 +64,11 @@ const router = createRouter({
       path:'/:routeInconnue(.*)',
       component: NotFoundView,
       name:'not-found'
+    },
+    {
+      path:'/erreur-reseau',
+      component: ErreurReseauView,
+      name:'erreur-reseau'
     }
   ]
 })
