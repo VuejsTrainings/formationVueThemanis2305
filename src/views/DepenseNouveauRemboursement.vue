@@ -9,6 +9,16 @@ export default {
             required: true
         }
     },
+    data(){
+        return {
+            modifie: true,
+        }
+    },
+    beforeRouteLeave(){
+        if(this.modifie && !confirm("Vos changements seront perdus.\nSûr.e?")){
+            return false;
+        }
+    }
 }
 </script>
 <style scoped>
