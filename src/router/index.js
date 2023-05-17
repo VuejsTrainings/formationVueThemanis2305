@@ -6,6 +6,7 @@ import DepenseNouveauRemboursementView from '@/views/DepenseNouveauRemboursement
 import DepenseImpressionView from '@/views/DepenseImpression.vue'
 import NotFoundView from '@/views/NotFound.vue'
 import ErreurReseauView from '@/views/ErreurReseau.vue'
+import DepensesService from '../services/depenses'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,7 +27,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
       // Alias (! attention pour le SEO)
-      alias:'/about-us'
+      alias:'/about-us',
     },
     {
       path:'/depenses/:id',
@@ -36,6 +37,17 @@ const router = createRouter({
       // voir https://router.vuejs.org/guide/essentials/nested-routes.html#nested-named-routes
       // pour les effets de l'utilsation d'un nom sur la route mère
       props: true,
+      beforeEnter: async (to) => {
+        try{
+          const httpResponse = await DepensesService.getOne(parseInt(to.params.id));
+          // Alimenter le store applicatif
+          console.log(httpResponse)
+          // vm.depense = httpResponse.data;
+          // return true
+        }catch(e){
+          return {name:'not-found', params: {routeInconnue: 'not-found'}};
+        }
+      },
       children: [
         {
           path:'',
@@ -51,6 +63,7 @@ const router = createRouter({
           path: 'ajouter-remboursement',
           name:'depense-nouveau-remboursement',
           component: DepenseNouveauRemboursementView,
+          meta: { adminsOnly: true }
         }
       ]
     },
@@ -71,6 +84,14 @@ const router = createRouter({
       name:'erreur-reseau'
     }
   ]
+})
+
+router.beforeEach((to) => {
+  const isAdmin = false;
+  if(to.meta && to.meta.adminsOnly && !isAdmin){
+    return false;
+  }
+  // return true
 })
 
 export default router

@@ -1,14 +1,16 @@
 <template>
-    <h1>{{ nature }}, le {{ date }}</h1>
-    <nav>
-        <RouterLink :to="{name:'depense-details'}">Détails</RouterLink>
-        <RouterLink :to="{name:'depense-nouveau-remboursement'}">Nouveau remboursement</RouterLink>
-        <RouterLink :to="{name: 'depense-imprimer'}">Imprimer</RouterLink>
-    </nav>
-    <RouterView :depense="depense" />
+    <div v-if="depense">
+        <h1>{{ nature }}, le {{ date }}</h1>
+        <nav>
+            <RouterLink :to="{name:'depense-details'}">Détails</RouterLink>
+            <RouterLink :to="{name:'depense-nouveau-remboursement'}">Nouveau remboursement</RouterLink>
+            <RouterLink :to="{name: 'depense-imprimer'}">Imprimer</RouterLink>
+        </nav>
+        <RouterView :depense="depense" />
+    </div>
 </template>
 <script>
-import { depenses } from '@/stores/depenses'
+import { depenses } from '@/stores/depenses';
 import capitalize from 'lodash.capitalize'
 
 export default {
@@ -20,13 +22,14 @@ export default {
     },
     data(){
         return {
-            depenses
+            depenses: depenses
         }
     },
     computed: {
         depense(){
-            return this.depenses.find( dep => dep.id === parseInt(this.id) )
-        },
+            //console.log('ok')
+            return this.depenses.find( d => d.id === parseInt(this.id))
+        },  
         date(){
             return new Date(this.depense.date).toLocaleDateString();
         },
