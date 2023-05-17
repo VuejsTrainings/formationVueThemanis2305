@@ -1,4 +1,7 @@
 <template>
+  
+  <LoginForm />
+  
   <nav>
     <RouterLink :to="{ name: 'home' }">Home</RouterLink>
     <RouterLink :to="{ name: 'about' }">About</RouterLink>
@@ -6,7 +9,14 @@
 
   <RouterView />
 </template>
-
+<script>
+import LoginForm from '@/components/LoginForm.vue'
+export default {
+  components:{
+    LoginForm
+  }
+}  
+</script>
 <style scoped>
 nav {
   width: 100%;

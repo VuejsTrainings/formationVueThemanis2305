@@ -7,6 +7,7 @@ import DepenseImpressionView from '@/views/DepenseImpression.vue'
 import NotFoundView from '@/views/NotFound.vue'
 import ErreurReseauView from '@/views/ErreurReseau.vue'
 import DepensesService from '../services/depenses'
+import { useUserStore } from '@/stores/user'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -87,7 +88,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to) => {
-  const isAdmin = false;
+  const isAdmin = useUserStore().logged;
   if(to.meta && to.meta.adminsOnly && !isAdmin){
     return false;
   }
