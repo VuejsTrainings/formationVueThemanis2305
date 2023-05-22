@@ -23,7 +23,7 @@
 
 <script>
 import Carte from '@/components/CarteAvecSlots.vue'
-import DepensesService from '@/services/depenses';
+import { useDepensesStore } from '../stores/depenses';
 
 export default {
   components: {
@@ -35,12 +35,10 @@ export default {
       default: 1,
     }
   },
-  data(){
-    return {
-      depensesBase: null, 
-    }
-  },
   computed:{
+    depensesBase() {
+      return useDepensesStore().items;
+    },  
     depenses(){
       const NB = 2;
       if(this.depensesBase != null){
@@ -56,15 +54,12 @@ export default {
       return this.page < nbPages;
     }
   },
-   async beforeRouteEnter (to, from, next) {
+   async beforeRouteEnter () {
      try{
-       const httpResponse = await DepensesService.getAll()
-       next((vm)=>{
-         vm.depensesBase = httpResponse.data;
-       });
+       await useDepensesStore().fetchItems();
      }catch(e){
           console.log("Erreur!")
-          next({name:'erreur-reseau'});
+          return {name:'erreur-reseau'};
      }
   }
 }

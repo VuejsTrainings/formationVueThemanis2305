@@ -92,7 +92,6 @@ router.beforeEach((to) => {
   if(to.meta && to.meta.adminsOnly && !isAdmin){
     return false;
   }
-  // return true
 })
 
 export default router

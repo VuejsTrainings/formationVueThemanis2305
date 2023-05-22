@@ -10,8 +10,9 @@
     </div>
 </template>
 <script>
-import { depenses } from '@/stores/depenses';
+import { useDepensesStore } from '@/stores/depenses'
 import capitalize from 'lodash.capitalize'
+import { mapState } from 'pinia';
 
 export default {
     props: {
@@ -20,16 +21,12 @@ export default {
             required: true
         }
     },
-    data(){
-        return {
-            depenses: depenses
-        }
-    },
     computed: {
         depense(){
-            //console.log('ok')
-            return this.depenses.find( d => d.id === parseInt(this.id))
-        },  
+           const getter =  useDepensesStore().depense;
+           console.log(getter);
+           return getter(this.id)
+        },
         date(){
             return new Date(this.depense.date).toLocaleDateString();
         },

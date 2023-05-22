@@ -7,6 +7,9 @@ const depensesService = {
     },
     getOne(id){
         return axiosService.get(`${this.baseURL}/${id}`);
+    },
+    addRemboursement(demandeId, payload){
+        return axiosService.post(`${this.baseURL}/${demandeId}`, payload);
     }
 }
 
