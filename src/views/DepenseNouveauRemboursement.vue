@@ -8,7 +8,7 @@
         <input id="montant" type="number" v-model="montant" />
         
         <label for="origine">Origine</label>
-        <select>
+        <select v-model="origine">
             <option value="ro">Régime obligatoire</option>
             <option value="mut">Mutuelle</option>
         </select>
@@ -16,7 +16,7 @@
     </form>
 </template>
 <script>
-// import DepensesService from '../services/depenses';
+import { useDepensesStore } from '@/stores/depenses';
 
 export default {
     props: {
@@ -34,15 +34,16 @@ export default {
         }
     },
     methods:{
-        envoiRemboursement(){
-        //     const remboursement = {
-        //         montant: this.montant,
-        //         date: this.date,
-        //         origine: this.origine,
+        async envoiRemboursement(){
+            const remboursement = {
+                montant: this.montant,
+                date: this.date,
+                origine: this.origine,
 
-        //     };
-        //     //const remboursementAjoute = await DepensesService.addRemboursement(this.depense.id,remboursement);
-            return true    
+            };
+            await useDepensesStore().ajouteRemboursement(this.depense.id, remboursement);
+            this.modifie = false;            
+            this.$router.replace({name:'depense-details'})   
         }
     },
     beforeRouteLeave(){

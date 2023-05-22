@@ -9,7 +9,7 @@ const depensesService = {
         return axiosService.get(`${this.baseURL}/${id}`);
     },
     addRemboursement(demandeId, payload){
-        return axiosService.post(`${this.baseURL}/${demandeId}`, payload);
+        return axiosService.post(`${this.baseURL}/${demandeId}/remboursements`, payload);
     }
 }
 

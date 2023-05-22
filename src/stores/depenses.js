@@ -18,9 +18,13 @@ export const useDepensesStore = defineStore('depenses', {
       this.items = httpResponse.data;
     },
     async ajouteRemboursement(depenseId, remboursement){
-      const httpResponse = await DepensesService.addRemboursement(depenseId,remboursement)
-      const remboursementAjoute = httpResponse.data;
-      const depense = this.depenses.find( dep => dep.id == depenseId);
+      // Les 2 lignes suivantes devraient être réactivées si on utlisait une vraie API 
+      //const httpResponse = await DepensesService.addRemboursement(depenseId,remboursement)
+      //const remboursementAjoute = httpResponse.data;
+      // La ligne suivante devrait elle être désactivée. Elle simule le retour de l'objet ajouté au niveau de l'API
+      const remboursementAjoute = remboursement;
+      // A partir d'ici, le traitement est inchangé
+      const depense = this.items.find( dep => dep.id == depenseId );
       depense.remboursements.push(remboursementAjoute);
     }
   }
